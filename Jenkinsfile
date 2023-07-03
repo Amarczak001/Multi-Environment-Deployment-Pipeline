@@ -2,22 +2,20 @@ pipeline {
     agent any
 
     stages {
-        stage('Build') {
+        stage('Build Docker Image') {
             steps {
-                echo 'Building...'
-                sh 'pip install -r requirements.txt'
+                sh 'docker build -t your-image-name .'
+            }
+        }
+        stage('Run Docker Container') {
+            steps {
+                sh 'docker run -d -p 5000:5000 --name your-container-name your-image-name'
             }
         }
         stage('Test') {
             steps {
                 echo 'Testing...'
-                sh '''
-                    echo "Python path: $(which python)"
-                    echo "pip path: $(which pip)"
-                    pip freeze | grep pytest
-                '''
-                sh 'python3.8 -m pytest'
-                
+                sh 'docker exec your-container-name python3.8 -m pytest'
             }
         }
         stage('Deploy') {
