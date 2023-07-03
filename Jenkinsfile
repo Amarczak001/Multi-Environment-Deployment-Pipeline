@@ -15,8 +15,8 @@ pipeline {
                     echo "Python path: $(which python)"
                     echo "pip path: $(which pip)"
                     pip freeze | grep pytest
-                    'pytest'
                 '''
+                sh 'python3.8 -m pytest'
                 
             }
         }
