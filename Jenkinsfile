@@ -11,6 +11,10 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Testing...'
+                sh 'which python'
+                sh 'which pip'
+                sh 'pip freeze | grep pytest'
+
                 sh 'pytest'
             }
         }
