@@ -11,11 +11,13 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Testing...'
-                sh 'which python'
-                sh 'which pip'
-                sh 'pip freeze | grep pytest'
-
-                sh 'pytest'
+                sh '''
+                    echo "Python path: $(which python)"
+                    echo "pip path: $(which pip)"
+                    pip freeze | grep pytest
+                    sh 'pytest'
+                '''
+                
             }
         }
         stage('Deploy') {
